@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEAM Access</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+  body { background: #0f172a; color: white; display: flex; justify-content: center; align-items: center; height: 100vh; }
+  
+  .box { background: #1e293b; padding: 40px; border-radius: 16px; width: 90%; max-width: 400px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+  .box h1 { margin-bottom: 20px; font-size: 24px; color: #38bdf8; }
+  .box input { width: 100%; padding: 12px; margin: 10px 0; border: none; border-radius: 8px; background: #334155; color: white; font-size: 16px; text-transform: uppercase; }
+  .box button { width: 100%; padding: 12px; background: #38bdf8; border: none; border-radius: 8px; color: #0f172a; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; }
+  .box button:hover { background: #0ea5e9; }
+  .error { color: #f87171; margin-top: 10px; display: none; }
+  
+  #driveScreen { display: none; width: 100%; height: 100vh; }
+  #driveScreen iframe { width: 100%; height: 100%; border: none; }
+  .back-btn { position: absolute; top: 15px; left: 15px; padding: 8px 16px; background: #ef4444; border: none; border-radius: 6px; color: white; cursor: pointer; z-index: 10; }
+</style>
+</head>
+<body>
+
+<!-- Screen 1: Password -->
+<div class="box" id="loginScreen">
+  <h1>TEAM ACCESS</h1>
+  <p>Enter password to continue</p>
+  <input type="password" id="password" placeholder="Enter Password">
+  <button onclick="checkPassword()">GO</button>
+  <p class="error" id="errorMsg">Wrong Password! Try: TEAM123</p>
+</div>
+
+<!-- Screen 2: Drive Folder -->
+<div id="driveScreen">
+  <button class="back-btn" onclick="logout()">Logout</button>
+  <iframe src="https://drive.google.com/embeddedfolderview?id=1DwS7LJrKHoqb7NPhY05PW_PRkQdpib7I#list"></iframe>
+</div>
+
+<script>
+  const CORRECT_PASSWORD = "TEAM123";
+  
+  function checkPassword() {
+    const pass = document.getElementById("password").value.toUpperCase();
+    if (pass === CORRECT_PASSWORD) {
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("driveScreen").style.display = "block";
+    } else {
+      document.getElementById("errorMsg").style.display = "block";
+    }
+  }
+  
+  function logout() {
+    document.getElementById("loginScreen").style.display = "block";
+    document.getElementById("driveScreen").style.display = "none";
+    document.getElementById("password").value = "";
+  }
+  
+  // Enter key se bhi submit ho jaye
+  document.getElementById("password").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") checkPassword();
+  });
+</script>
+
+</body>
+</html>
